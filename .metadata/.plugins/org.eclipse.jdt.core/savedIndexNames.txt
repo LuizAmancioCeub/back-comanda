@@ -53,8 +53,6 @@ INDEX VERSION 1.134+C:\Users\luizf\OneDrive\Área de Trabalho\Back_End\.metadata
 3852429140.index
 2690628141.index
 4060272887.index
-1579878769.index
-3447971362.index
 1533675143.index
 2020500349.index
 3856154431.index
@@ -129,10 +127,7 @@ INDEX VERSION 1.134+C:\Users\luizf\OneDrive\Área de Trabalho\Back_End\.metadata
 2124892929.index
 2194790674.index
 3952497166.index
-3145877785.index
 1544399873.index
-1125665178.index
-1080354362.index
 302750999.index
 2654236662.index
 257327625.index

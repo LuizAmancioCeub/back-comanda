@@ -1,5 +1,5 @@
 
-CREATE TABLE IF NOT EXISTS `comandaDigital`.`TB06_Cliente` (
+CREATE TABLE IF NOT EXISTS `comandaDigital`.`tb06_cliente` (
   `NU_CLIENTE` BINARY(16) NOT NULL,
   `CPF` VARCHAR(11) NOT NULL,
   `NOME` VARCHAR(45) NOT NULL,

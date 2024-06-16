@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS `comandaDigital`.`TB07_Mesa` (
+CREATE TABLE IF NOT EXISTS `comandaDigital`.`tb07_mesa` (
   `NU_MESA` INT NOT NULL,
   `QR_CODE` VARCHAR(145) NOT NULL,
   `NU_GARCOM` INT NULL,

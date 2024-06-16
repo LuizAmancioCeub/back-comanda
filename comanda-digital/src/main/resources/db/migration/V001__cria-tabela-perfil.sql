@@ -1,5 +1,5 @@
 
-CREATE TABLE IF NOT EXISTS `comandaDigital`.`TB01_Perfil` (
+CREATE TABLE IF NOT EXISTS `comandaDigital`.`tb01_perfil` (
   `NU_PERFIL` INT NOT NULL,
   `PERFIL` VARCHAR(25) NOT NULL,
   PRIMARY KEY (`NU_PERFIL`))

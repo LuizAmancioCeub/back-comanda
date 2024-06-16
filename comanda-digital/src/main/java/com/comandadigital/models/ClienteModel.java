@@ -62,7 +62,7 @@ public class ClienteModel extends RepresentationModel<GarcomModel> implements Se
 	private PerfilModel perfil;
 
 	@ManyToOne
-	@JoinColumn(name = "NU_MESA", nullable = false)
+	@JoinColumn(name = "NU_MESA")
 	private MesaModel mesa;
 	
 	
