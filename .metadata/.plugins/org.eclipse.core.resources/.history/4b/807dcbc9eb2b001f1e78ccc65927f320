@@ -1,0 +1,17 @@
+FROM ubuntu:latest AS build
+
+RUN as pat-get update
+RUN apt-get install open-jdk-17-jdk -y
+COPY . .
+
+RUN apt-get install maven -y
+
+FROM openjdk:17-slim
+RUN mvn clean install
+
+EXPOSE 8080
+
+COPY --from=build /target/comanda-digital-1.0.0.jar app.jar
+
+ENTRYPOINT [ "java", "-jar", "app.jar" ]
+

@@ -135,7 +135,6 @@ INDEX VERSION 1.134+C:\Users\luizf\OneDrive\Área de Trabalho\Back_End\.metadata
 1080354362.index
 302750999.index
 2654236662.index
-1426306822.index
 257327625.index
 1486111911.index
 2406301937.index
