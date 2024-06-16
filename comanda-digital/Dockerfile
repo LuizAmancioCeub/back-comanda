@@ -1,12 +1,12 @@
 FROM ubuntu:latest AS build
 
 RUN as pat-get update
-RUN apt-get install open-jdk-18-jdk -y
+RUN apt-get install open-jdk-17-jdk -y
 COPY . .
 
-RUN apt-get  install maven -y
+RUN apt-get install maven -y
 
-FROM openjdk:18-alpine
+FROM openjdk:17-slim
 
 EXPOSE 8080
 
