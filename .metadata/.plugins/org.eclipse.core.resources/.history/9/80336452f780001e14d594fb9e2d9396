@@ -1,0 +1,11 @@
+package com.comandadigital.repositories;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import com.comandadigital.models.ComandaModel;
+
+@Repository
+public interface ComandaRepository extends JpaRepository<ComandaModel, Integer> {
+
+}

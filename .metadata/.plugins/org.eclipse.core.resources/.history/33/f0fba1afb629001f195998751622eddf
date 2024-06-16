@@ -1,0 +1,77 @@
+package com.comandadigital.services;
+
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.comandadigital.models.ItemRelatorio;
+import com.comandadigital.models.PedidoModel;
+import com.comandadigital.repositories.PedidoRepository;
+
+@Service
+public class RelatorioService {
+
+	@Autowired
+    private PedidoRepository pedidoRepository;
+	
+	public ByteArrayInputStream gerarRelatorioSemanal() throws IOException {
+		 LocalDateTime now = LocalDateTime.now();
+	        LocalDateTime umaSemanaAtras = now.minus(1, ChronoUnit.WEEKS);
+
+	        List<PedidoModel> pedidos = pedidoRepository.findPedidosEntreDatas(umaSemanaAtras, now);
+
+	        Map<String, ItemRelatorio> itemRelatorioMap = new HashMap<>();
+
+	        for (PedidoModel pedido : pedidos) {
+	            String itemName = pedido.getItem().getNome();
+	            ItemRelatorio itemRelatorio = itemRelatorioMap.getOrDefault(itemName, new ItemRelatorio(itemName));
+	            itemRelatorio.incrementarQuantidade(pedido.getQuantidade());
+	            itemRelatorio.adicionarTempoEntrega(pedido.getHorarioPedido(), pedido.getHorarioEntrega());
+	            itemRelatorio.adicionarValorTotal(pedido.getValor() * pedido.getQuantidade());
+	            itemRelatorioMap.put(itemName, itemRelatorio);
+	        }
+
+	        try (Workbook workbook = new XSSFWorkbook(); ByteArrayOutputStream out = new ByteArrayOutputStream()) {
+	            Sheet sheet = workbook.createSheet("Relatório Semanal");
+
+	            // Cabeçalhos
+	            Row headerRow = sheet.createRow(0);
+	            headerRow.createCell(0).setCellValue("Item");
+	            headerRow.createCell(1).setCellValue("Quantidade Pedida");
+	            headerRow.createCell(2).setCellValue("Média Tempo Entrega (min)");
+	            headerRow.createCell(3).setCellValue("Valor Total");
+
+	            // Dados
+	            int rowIdx = 1;
+	            for (ItemRelatorio itemRelatorio : itemRelatorioMap.values()) {
+	                Row row = sheet.createRow(rowIdx++);
+	                row.createCell(0).setCellValue(itemRelatorio.getNome());
+	                row.createCell(1).setCellValue(itemRelatorio.getQuantidade());
+	                row.createCell(2).setCellValue(itemRelatorio.getMediaTempoEntrega());
+	                row.createCell(3).setCellValue(itemRelatorio.getValorTotal());
+	            }
+
+	            workbook.write(out);
+	            return new ByteArrayInputStream(out.toByteArray());
+	        }
+	}
+	
+	 private double calcularMediaTempoEntrega(PedidoModel pedido) {
+	        if (pedido.getHorarioEntrega() != null && pedido.getHorarioPedido() != null) {
+	            return ChronoUnit.MINUTES.between(pedido.getHorarioPedido(), pedido.getHorarioEntrega());
+	        }
+	        return 0;
+	    }
+}

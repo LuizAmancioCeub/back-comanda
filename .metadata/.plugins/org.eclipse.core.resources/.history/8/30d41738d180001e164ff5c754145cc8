@@ -1,0 +1,9 @@
+package com.comandadigital.dtos;
+
+import com.comandadigital.models.ClienteModel;
+
+import jakarta.validation.Valid;
+
+public record ComandaRecordDTO(@Valid status,@Valid ClienteModel cliente) {
+
+}

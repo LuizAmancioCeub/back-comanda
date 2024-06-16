@@ -1,0 +1,12 @@
+package com.comandadigital.services;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.comandadigital.repositories.MesaRepository;
+
+@Service
+public class MesaServiceImplements implements MesaService {
+	@Autowired
+	MesaRepository mesaRepository;
+}

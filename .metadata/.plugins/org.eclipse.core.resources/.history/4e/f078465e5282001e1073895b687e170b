@@ -1,0 +1,25 @@
+package com.comandadigital.services;
+
+import org.springframework.web.bind.annotation.RequestBody;
+
+import com.comandadigital.dtos.CozinhaLoginDTO;
+import com.comandadigital.dtos.CozinhaRegisterDTO;
+import com.comandadigital.models.CozinhaModel;
+
+import jakarta.validation.Valid;
+
+public class CozinhaServiceImplements implements CozinhaService {
+
+	@Override
+	public String login(CozinhaLoginDTO dto) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public CozinhaModel register(@RequestBody @Valid CozinhaRegisterDTO dto) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

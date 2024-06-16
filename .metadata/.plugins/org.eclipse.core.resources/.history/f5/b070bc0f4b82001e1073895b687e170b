@@ -1,0 +1,5 @@
+package com.comandadigital.infra.security;
+
+public class CozinhaAuthService {
+
+}

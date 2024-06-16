@@ -1,0 +1,16 @@
+package com.comandadigital.dtos;
+
+import com.comandadigital.dtos.myValidations.ItemUnique;
+import com.comandadigital.models.CategoriaModel;
+import com.comandadigital.models.StatusModel;
+
+import jakarta.validation.constraints.NotBlank;
+
+public record ItemRecordDTO(@NotBlank @ItemUnique String nome, 
+							@NotBlank String descricao, 
+							@NotBlank double preco, 
+							@NotBlank String imagem, 
+							@NotBlank CategoriaModel categoria, 
+							@NotBlank StatusModel status) {
+
+}

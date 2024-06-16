@@ -1,0 +1,18 @@
+package com.comandadigital.dtos;
+
+import org.hibernate.validator.constraints.Length;
+
+import com.comandadigital.dtos.myValidations.ItemUnique;
+import com.comandadigital.models.CategoriaModel;
+import com.comandadigital.models.StatusModel;
+
+import jakarta.validation.constraints.NotBlank;
+
+public record ItemRecordDTO(@NotBlank @ItemUnique @Length(min = 3, max = 25, message = "O nome deverá ter entre {min} e {max} caracteres" ) String nome, 
+							@NotBlank @Length(min = 10, max = 105, message = "A descrição deverá ter entre {min} e {max} caracteres" ) String descricao, 
+							@NotBlank double preco, 
+							@NotBlank @Length(min = 3, max = 45, message = "O nome da imagem deverá ter entre {min} e {max} caracteres" ) String imagem, 
+							@NotBlank Integer categoriaId, 
+							@NotBlank StatusModel status) {
+
+}

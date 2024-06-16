@@ -1,0 +1,24 @@
+package com.comandadigital.services;
+
+import java.util.List;
+import java.util.Optional;
+
+import com.comandadigital.dtos.ComandaRecordDTO;
+import com.comandadigital.models.ClienteModel;
+import com.comandadigital.models.ComandaModel;
+import com.comandadigital.models.StatusModel;
+
+public interface ComandaService {
+	
+	Optional<ComandaModel> findById(Integer id);
+	
+	List<ComandaModel> findAll(); // retornar  oq ta registrado no sistema
+	
+	//List<ComandaModel> findComandaByMesa();
+	
+	ComandaModel register( StatusModel status, ClienteModel cliente); // registro
+	
+	ComandaModel update(Integer id, ComandaRecordDTO comandaDTO); // update
+	
+	String delete(Integer id); // delete
+}

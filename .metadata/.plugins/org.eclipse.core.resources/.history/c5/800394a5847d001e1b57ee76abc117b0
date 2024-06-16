@@ -1,0 +1,13 @@
+package com.comandadigital.models;
+
+import java.io.Serializable;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "TB01_PERFIL")
+public class PerfilModel implements Serializable{
+	private static final long serialVersionUID = 1L;
+
+}

@@ -1,0 +1,8 @@
+package com.comandadigital.repositories;
+
+import org.springframework.stereotype.Repository;
+
+@Repository
+public interface PerfilRepository  {
+
+}

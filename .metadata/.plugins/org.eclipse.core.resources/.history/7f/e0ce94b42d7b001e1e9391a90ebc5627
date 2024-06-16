@@ -1,0 +1,5 @@
+package com.comandadigital.controllers;
+
+public class StatusController {
+
+}

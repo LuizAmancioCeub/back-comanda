@@ -1,0 +1,20 @@
+package com.comandadigital.dtos;
+
+import com.comandadigital.dtos.myValidations.DigitsOnly;
+import com.comandadigital.dtos.myValidations.MesaUnique;
+import com.comandadigital.models.GarcomModel;
+import com.comandadigital.models.StatusModel;
+
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.NotNull;
+
+public record MesaRecordDTO(@NotNull(message = "O número da mesa precisa ser informado") 
+							@MesaUnique 
+							@Max(value = 10000, message = "Limite de caracteres atingido")
+							Integer id, 
+							String qr_code, 
+							GarcomModel garcom, 
+							@Valid StatusModel status) {
+
+}

@@ -1,0 +1,14 @@
+package com.comandadigital.models;
+
+import java.io.Serializable;
+
+import org.springframework.hateoas.RepresentationModel;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "TB05_GARCOM")
+public class GarcomModel extends RepresentationModel<GarcomModel> implements Serializable {
+
+}

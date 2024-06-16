@@ -1,0 +1,16 @@
+package com.comandadigital.services;
+
+public class LoginService {
+	
+	if(clienteRepository.findByLogin(dto.login()) != null) {
+		ClienteLoginDTO clienteDTO = new ClienteLoginDTO(dto.login(), dto.senha(), dto.mesa());
+		var cliente = clienteService.login(clienteDTO);
+		return cliente + "\n Cliente";
+	}
+	
+	if(cozinhaRepository.findByLogin(dto.login()) != null) {
+		CozinhaLoginDTO cozinhaDTO = new CozinhaLoginDTO(dto.login(), dto.senha());
+		var cozinha = cozinhaService.login(cozinhaDTO);
+		return cozinha + "\n Cozinha";
+	}
+}

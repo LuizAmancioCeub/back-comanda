@@ -1,0 +1,2 @@
+Insert into tb02_gerente (NU_GERENTE, MATRICULA, NOME, CPF,SENHA,TELEFONE,EMAIL,NU_PERFIL) values
+						 (1,"GE1001", "Gerente Inicial","00000000000","Comanda2024@","61999999999","gerenteinicial@tst.com",3);

@@ -1,0 +1,16 @@
+package com.comandadigital.services;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.comandadigital.repositories.CategoriaRepository;
+
+public class CategoriaServiceImplements implements CategoriaService {
+	@Autowired
+	CategoriaRepository categoriaRepository;
+	
+	@Override
+	public boolean existsByName(String name) {
+		 return categoriaRepository.existsByName(name);
+	}
+
+}

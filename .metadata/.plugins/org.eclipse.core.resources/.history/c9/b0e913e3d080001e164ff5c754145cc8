@@ -1,0 +1,19 @@
+package com.comandadigital.models;
+
+import java.io.Serializable;
+
+import org.springframework.hateoas.RepresentationModel;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
+
+@Entity
+@Table(name = "TB08_COMANDA")
+public class ComandaModel extends RepresentationModel<ComandaModel> implements Serializable {
+
+}

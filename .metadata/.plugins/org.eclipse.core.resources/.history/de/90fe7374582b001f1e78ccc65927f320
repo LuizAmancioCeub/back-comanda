@@ -1,0 +1,1 @@
+Insert into tb13_status (tb13_status.STATUS) values ("Ativo"),("Inativo"),("Em Preparação"),("Pronto para Entrega"),("Entregue"),("Cancelado"),("Em Processamento"),("Aberta"),("Aguardando Pagamento"),("Paga"),("Livre"),("Ocupada"),("Reservado"),("Indisponível");

@@ -1,0 +1,20 @@
+CREATE TABLE IF NOT EXISTS `comanda-digital2`.`TB07_Mesa` (
+  `NU_MESA` INT NOT NULL,
+  `QR_CODE` VARCHAR(145) NOT NULL,
+  `NU_GARCOM` INT NULL,
+  `NU_STATUS` INT NOT NULL,
+  PRIMARY KEY (`NU_MESA`),
+  INDEX `fk_Mesa_Garcom1_idx` (`NU_GARCOM` ASC) ,
+  INDEX `fk_Mesa_Status1_idx` (`NU_STATUS` ASC) ,
+  UNIQUE INDEX `QR_CODE_UNIQUE` (`QR_CODE` ASC) ,
+  CONSTRAINT `fk_Mesa_Garcom1`
+    FOREIGN KEY (`NU_GARCOM`)
+    REFERENCES `comanda-digital`.`TB05_Garcom` (`NU_GARCOM`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+  CONSTRAINT `fk_Mesa_Status1`
+    FOREIGN KEY (`NU_STATUS`)
+    REFERENCES `comanda-digital`.`TB13_Status` (`NU_STATUS`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
+ENGINE = InnoDB;

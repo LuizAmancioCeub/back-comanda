@@ -1,0 +1,1 @@
+Insert into TB13_Status (tSTATUS) values ("Ativo"),("Inativo"),("Em Preparação"),("Pronto para Entrega"),("Entregue"),("Cancelado"),("Em Processamento"),("Aberta"),("Aguardando Pagamento"),("Paga"),("Livre"),("Ocupada"),("Reservado"),("Indisponível");

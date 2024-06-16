@@ -1,0 +1,15 @@
+package com.comandadigital.dtos;
+
+import com.comandadigital.models.GarcomModel;
+import com.comandadigital.models.StatusModel;
+
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+
+public record MesaRecordDTO(@NotNull(message = "O número da mesa precisa ser informado") Integer id, 
+							@NotBlank(message = "Necessário link para gerar qrcode") String qr_code, 
+							GarcomModel garcom, 
+							@Valid StatusModel status) {
+
+}

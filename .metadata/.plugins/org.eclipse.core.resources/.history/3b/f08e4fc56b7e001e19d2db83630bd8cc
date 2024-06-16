@@ -1,0 +1,12 @@
+package com.comandadigital.controllers;
+
+import org.springframework.http.ResponseEntity;
+
+public class MesaController {
+
+	public ResponseEntity<Object> getOneMesaId(Integer id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

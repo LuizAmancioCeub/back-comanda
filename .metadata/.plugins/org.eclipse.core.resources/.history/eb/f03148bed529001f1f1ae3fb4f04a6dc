@@ -1,0 +1,115 @@
+package com.comandadigital.services;
+
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.comandadigital.models.ItemRelatorio;
+import com.comandadigital.models.PedidoModel;
+import com.comandadigital.repositories.PedidoRepository;
+
+import lombok.extern.slf4j.Slf4j;
+
+@Service
+@Slf4j
+public class RelatorioService {
+
+	@Autowired
+    private PedidoRepository pedidoRepository;
+	
+	public void gerarRelatorioSemanal(List<PedidoModel> pedidos) throws IOException {
+			log.info("Gerando arquivo");
+		 LocalDateTime now = LocalDateTime.now();
+	        LocalDateTime umaSemanaAtras = now.minus(1, ChronoUnit.WEEKS);
+
+	        //List<PedidoModel> pedidos = pedidoRepository.findPedidosEntreDatas(umaSemanaAtras, now);
+
+	        Map<String, ItemRelatorio> itemRelatorioMap = new HashMap<>();
+
+	        for (PedidoModel pedido : pedidos) {
+	            String itemName = pedido.getItem().getNome();
+	            ItemRelatorio itemRelatorio = itemRelatorioMap.getOrDefault(itemName, new ItemRelatorio(itemName));
+	            itemRelatorio.incrementarQuantidade(pedido.getQuantidade());
+	            itemRelatorio.adicionarTempoEntrega(pedido.getHorarioPedido(), pedido.getHorarioEntrega());
+	            itemRelatorio.adicionarValorTotal(pedido.getValor() * pedido.getQuantidade());
+	            itemRelatorioMap.put(itemName, itemRelatorio);
+	        }
+
+	        try (var workBook = new XSSFWorkbook(); var outputSream = new FileOutputStream("relatorio_semanal")) {
+	        	
+	        	var planilha = workBook.createSheet("Lista Pedidos");
+
+	            // Cabeçalhos
+	            Row headerRow = planilha.createRow(0);
+	            headerRow.createCell(0).setCellValue("Item");
+	            headerRow.createCell(1).setCellValue("Quantidade Pedida");
+	            headerRow.createCell(2).setCellValue("Média Tempo Entrega (min)");
+	            headerRow.createCell(3).setCellValue("Valor Total");
+
+	            // Dados
+	            int numeroLinha = 1;
+	            for (ItemRelatorio itemRelatorio : itemRelatorioMap.values()) {
+	            	var linha = planilha.createRow(numeroLinha++);
+	            	linha.createCell(0).setCellValue(itemRelatorio.getNome());
+	            	linha.createCell(1).setCellValue(itemRelatorio.getQuantidade());
+	            	linha.createCell(2).setCellValue(itemRelatorio.getMediaTempoEntrega());
+	            	linha.createCell(3).setCellValue(itemRelatorio.getValorTotal());
+	            }
+
+	            workBook.write(outputSream);
+	            //return new ByteArrayInputStream(out.toByteArray());
+	        }catch (FileNotFoundException e) {
+				log.error("Arquivo não encontrado");
+			}catch (IOException e) {
+				log.error("Erro ao processar arquivo");
+			}
+	        log.info("Arquivo Gerado com Sucesso");
+	}
+	
+	 public byte[] gerarRelatorioSemanal2() throws IOException {
+	        LocalDateTime now = LocalDateTime.now();
+	        LocalDateTime startDate = now.minusDays(7);
+
+	        List<PedidoModel> pedidos = pedidoRepository.findPedidosEntreDatas(startDate, now);
+
+	        try (Workbook workbook = new XSSFWorkbook()) {
+	            var sheet = workbook.createSheet("Relatório Semanal");
+
+	            // Adicionar cabeçalhos
+	            var headerRow = sheet.createRow(0);
+	            headerRow.createCell(0).setCellValue("Item");
+	            headerRow.createCell(1).setCellValue("Quantidade de Pedidos");
+	            headerRow.createCell(2).setCellValue("Tempo Médio de Entrega (minutos)");
+	            headerRow.createCell(3).setCellValue("Valor Total Arrecadado");
+
+	            // Adicionar dados
+	            int rowNum = 1;
+	            for (PedidoModel pedido : pedidos) {
+	                var row = sheet.createRow(rowNum++);
+	                row.createCell(0).setCellValue(pedido.getItem().getNome());
+	                row.createCell(1).setCellValue(pedido.getQuantidade());
+	                row.createCell(2).setCellValue(pedido.getHorarioEntrega() != null ? pedido.getHorarioEntrega().getMinute() - pedido.getHorarioPedido().getMinute() : 0);
+	                row.createCell(3).setCellValue(pedido.getValor() * pedido.getQuantidade());
+	            }
+
+	            try (ByteArrayOutputStream bos = new ByteArrayOutputStream()) {
+	                workbook.write(bos);
+	                return bos.toByteArray();
+	            }
+	        }
+	    }
+}

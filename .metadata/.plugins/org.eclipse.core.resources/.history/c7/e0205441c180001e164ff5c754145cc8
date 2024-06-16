@@ -1,0 +1,65 @@
+package com.comandadigital.services;
+
+import java.util.List;
+import java.util.Set;
+
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.comandadigital.dtos.PedidoRecordDTO;
+import com.comandadigital.models.ItemModel;
+import com.comandadigital.models.PedidoModel;
+import com.comandadigital.repositories.ItemRepository;
+import com.comandadigital.repositories.PedidoRepository;
+
+@Service
+public class PedidoServiceImplements implements PedidoService {
+	
+	@Autowired
+	private PedidoRepository pedidoRepository;
+	@Autowired
+    private ItemRepository itemRepository;
+	
+	@Override
+	public PedidoModel register( PedidoRecordDTO pedidoDTO) {
+		var pedidoModel = new PedidoModel();
+		BeanUtils.copyProperties(pedidoDTO, pedidoModel);
+		
+		// Verificando se os itens do pedido existem e estão disponiveis
+		Set<ItemModel> itens = pedidoModel.getItens();
+		for(ItemModel item : itens) {
+			ItemModel existingItem = itemRepository.findByIdAndStatusId(item.getId(), 1);
+			if(existingItem == null) {
+				throw new RuntimeException( item.getNome()+" não encontrado ou com status inválido");
+			}
+		}
+		
+		return pedidoRepository.save(pedidoModel);
+	}
+
+	@Override
+	public List<PedidoModel> findAll() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<PedidoModel> findPedidoByCpf(String cpf) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public PedidoModel update(Integer id, PedidoRecordDTO pedidoDTO) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String delete(Integer id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

@@ -1,0 +1,9 @@
+package com.comandadigital.dtos;
+
+import org.springframework.stereotype.Component;
+
+import com.comandadigital.models.MesaModel;
+
+public record LoginDTO(String login, String senha, MesaModel mesa) {
+
+}

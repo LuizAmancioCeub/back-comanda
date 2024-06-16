@@ -1,0 +1,40 @@
+package com.comandadigital.services;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
+
+import com.comandadigital.dtos.CozinhaLoginDTO;
+import com.comandadigital.dtos.CozinhaRegisterDTO;
+import com.comandadigital.models.CozinhaModel;
+import com.comandadigital.models.PerfilModel;
+import com.comandadigital.repositories.CozinhaRepository;
+import com.comandadigital.repositories.PerfilRepository;
+
+import jakarta.validation.Valid;
+
+@Service
+public class CozinhaServiceImplements implements CozinhaService {
+	
+	@Autowired
+	CozinhaRepository cozinhaRepository;
+	@Autowired
+	PerfilRepository perfilRepository;
+	
+	@Override
+	public String login(CozinhaLoginDTO dto) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public CozinhaModel register(@RequestBody @Valid CozinhaRegisterDTO dto) {
+		if(cozinhaRepository.findByTipo(dto.tipo()) != null) {
+			return null;
+		}
+		String encryptedPassword = new BCryptPasswordEncoder().encode(dto.senha());
+		PerfilModel perfilCliente = perfilRepository.findById(5).orElseThrow(() -> new RuntimeException("Perfil não encontrado"));
+	}
+
+}

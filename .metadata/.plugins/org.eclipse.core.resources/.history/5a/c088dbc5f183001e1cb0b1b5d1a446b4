@@ -1,0 +1,59 @@
+package com.comandadigital.services;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.web.bind.annotation.RequestBody;
+
+import com.comandadigital.dtos.LoginDTO;
+import com.comandadigital.dtos.ComandaRecordDTO;
+import com.comandadigital.models.ClienteModel;
+import com.comandadigital.models.MesaModel;
+import com.comandadigital.models.StatusModel;
+
+import jakarta.validation.Valid;
+
+public class LoginService {
+	
+	@Override
+	public String login(@RequestBody @Valid LoginDTO dto) {
+		
+		// Validar se existe login
+		if(repository.findByLogin(dto.login()) == null) {
+			return "LoginNotFound";
+		}
+		
+		Optional<MesaModel> mesaOptional = mesaRepository.findById(dto.mesa().getId());
+		if (!mesaOptional.isPresent()|| mesaOptional.get().getStatus().getId().equals(12)) {
+			return "MesaNotFound";
+		}
+		
+		var userNameSenha = new UsernamePasswordAuthenticationToken(dto.login(), dto.senha());
+		var auth = this.authManager.authenticate(userNameSenha);
+	    
+
+		MesaModel mesa = mesaOptional.get();
+		
+		if (mesa.getStatus().getId() == 9) {
+			 mesaService.atualizarStatusMesa(mesaOptional.get().getId(), 9, 10);
+	    }
+		 // Associar número da mesa ao cliente durante o login
+        setarMesaCliente(dto.login(), mesa.getId());
+    
+        
+     // Criar comanda para o cliente se n tiver comanda ativa   
+        List<Integer> statusList = Arrays.asList(6, 7);
+        if(comandaService.findComandaByCpf(dto.login(), statusList) == null ) {
+        	 StatusModel defaultStatus = statusRepository.findById(6).orElseThrow(() -> new RuntimeException("Status não encontrado"));
+             ClienteModel defaultCliente = (ClienteModel) clienteRepository.findByLogin(dto.login());
+             ComandaRecordDTO comandaDTO = new ComandaRecordDTO(defaultStatus, defaultCliente);
+             comandaService.register(comandaDTO);
+        }
+       
+		
+		return tokenService.generateTokenCliente((ClienteModel)auth.getPrincipal());	
+		 
+	}
+}

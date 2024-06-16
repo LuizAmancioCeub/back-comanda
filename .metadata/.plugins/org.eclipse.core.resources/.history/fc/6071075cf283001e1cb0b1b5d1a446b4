@@ -1,0 +1,50 @@
+package com.comandadigital.services;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.web.bind.annotation.RequestBody;
+
+import com.comandadigital.dtos.LoginDTO;
+import com.comandadigital.infra.security.TokenService;
+import com.comandadigital.models.ClienteModel;
+import com.comandadigital.repositories.ClienteRepository;
+import com.comandadigital.repositories.MesaRepository;
+import com.comandadigital.repositories.PerfilRepository;
+import com.comandadigital.repositories.StatusRepository;
+
+import jakarta.validation.Valid;
+
+public class LoginService {
+	@Autowired
+	private AuthenticationManager authManager;
+	@Autowired
+	private ClienteRepository repository;
+	@Autowired
+	TokenService tokenService;
+	@Autowired
+	private PerfilRepository perfilRepository;
+	@Autowired
+	private MesaRepository mesaRepository;
+	@Autowired
+	private MesaServiceImplements mesaService;
+	@Autowired
+	private ComandaServiceImplements comandaService;
+	@Autowired
+	private StatusRepository statusRepository;
+	
+	public String login(@RequestBody @Valid LoginDTO dto) {
+		
+		// Validar se existe login
+		if(repository.findByLogin(dto.login()) == null) {
+			return "LoginNotFound";
+		}
+		
+		
+		var userNameSenha = new UsernamePasswordAuthenticationToken(dto.login(), dto.senha());
+		var auth = this.authManager.authenticate(userNameSenha);
+		
+		return tokenService.generateTokenCliente((ClienteModel)auth.getPrincipal());	
+		 
+	}
+}

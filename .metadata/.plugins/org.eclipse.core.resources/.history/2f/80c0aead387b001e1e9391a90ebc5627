@@ -1,0 +1,15 @@
+package com.comandadigital.models;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
+
+@Entity
+@Table(name = "TB11_ITEM")
+public class ItemModel {
+
+}

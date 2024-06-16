@@ -1,0 +1,22 @@
+package com.comandadigital.dtos;
+
+import com.comandadigital.models.CozinhaModel;
+import com.comandadigital.models.ItemModel;
+//import com.comandadigital.models.PedidoItemModel;
+import com.comandadigital.models.StatusModel;
+
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
+
+public record PedidoRecordDTO(  @NotNull @Min(value = 1, message = "Quantidade mínima: 1") @Max(value = 15, message = "Quantidade máxima: 10") int quantidade,
+								@NotNull double valor,
+								String observacao,
+								@NotNull CozinhaModel cozinha,
+						        @Valid StatusModel status,
+						        @Valid ItemModel item
+						        //@Size(min = 1, max = 6, message = "A quantidade de itens no pedido deve estar entre {min} e {max}") @Valid Set<PedidoItemModel> itens
+						        ){
+
+}

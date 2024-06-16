@@ -1,0 +1,58 @@
+package com.comandadigital.services;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.web.bind.annotation.RequestBody;
+
+import com.comandadigital.dtos.ClienteLoginDTO;
+import com.comandadigital.dtos.ComandaRecordDTO;
+import com.comandadigital.dtos.LoginDTO;
+import com.comandadigital.infra.security.TokenService;
+import com.comandadigital.models.ClienteModel;
+import com.comandadigital.models.MesaModel;
+import com.comandadigital.models.StatusModel;
+import com.comandadigital.repositories.ClienteRepository;
+import com.comandadigital.repositories.MesaRepository;
+import com.comandadigital.repositories.PerfilRepository;
+import com.comandadigital.repositories.StatusRepository;
+
+import jakarta.validation.Valid;
+
+public class LoginService {
+	@Autowired
+	private AuthenticationManager authManager;
+	@Autowired
+	private ClienteRepository repository;
+	@Autowired
+	TokenService tokenService;
+	@Autowired
+	private PerfilRepository perfilRepository;
+	@Autowired
+	private MesaRepository mesaRepository;
+	@Autowired
+	private MesaServiceImplements mesaService;
+	@Autowired
+	private ComandaServiceImplements comandaService;
+	@Autowired
+	private StatusRepository statusRepository;
+	
+	@Override
+	public String login(@RequestBody @Valid LoginDTO dto) {
+		
+		// Validar se existe login
+		if(repository.findByLogin(dto.login()) == null) {
+			return "LoginNotFound";
+		}
+		
+		
+       
+		
+		return tokenService.generateTokenCliente((ClienteModel)auth.getPrincipal());	
+		 
+	}
+}

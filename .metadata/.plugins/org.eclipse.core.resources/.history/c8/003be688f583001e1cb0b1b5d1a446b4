@@ -1,0 +1,8 @@
+package com.comandadigital.dtos;
+
+import com.comandadigital.models.MesaModel;
+
+@Component
+public record LoginsDTO(String login, String senha, MesaModel mesa) {
+
+}

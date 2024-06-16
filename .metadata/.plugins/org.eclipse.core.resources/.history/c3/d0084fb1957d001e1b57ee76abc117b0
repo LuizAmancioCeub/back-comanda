@@ -1,0 +1,15 @@
+package com.comandadigital.controllers;
+
+import java.util.List;
+
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.comandadigital.models.PerfilModel;
+
+@RestController
+public class PerfilController {
+	public ResponseEntity<List<PerfilModel>> getAllPerfil(){
+		
+	}
+}

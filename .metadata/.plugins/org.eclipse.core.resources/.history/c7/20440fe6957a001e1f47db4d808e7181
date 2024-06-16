@@ -1,0 +1,25 @@
+package com.comandadigital.services;
+
+import java.util.List;
+import java.util.Optional;
+
+import com.comandadigital.dtos.CategoriaRecordDTO;
+import com.comandadigital.models.CategoriaModel;
+
+public interface CategoriaService {
+	
+	boolean existsByName(String name);
+	
+	public Optional<CategoriaModel> findById(Long id);
+	
+	CategoriaRecordDTO findByName(String categoria);
+	
+	List<CategoriaRecordDTO> findAll(); // retornar  oq ta registrado no sistema
+	
+	CategoriaRecordDTO register(CategoriaRecordDTO categoriaDTO); // registro
+	
+	CategoriaRecordDTO update(Long id,CategoriaRecordDTO categoriaDTO); // update
+	
+	String delete(Long id); // delete
+	
+}

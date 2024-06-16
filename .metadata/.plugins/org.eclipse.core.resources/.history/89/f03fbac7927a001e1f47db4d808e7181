@@ -1,0 +1,6 @@
+package com.comandadigital.services;
+
+public interface CategoriaService {
+	
+	boolean existsByName(String name);
+}

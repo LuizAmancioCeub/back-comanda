@@ -1,0 +1,5 @@
+package com.comandadigital.models;
+
+public class StatusModel {
+
+}

@@ -1,0 +1,47 @@
+package com.comandadigital.services;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.comandadigital.dtos.PedidoRecordDTO;
+import com.comandadigital.models.PedidoModel;
+import com.comandadigital.repositories.PedidoRepository;
+
+@Service
+public class PedidoServiceImplements implements PedidoService {
+	
+	@Autowired
+	PedidoRepository pedidoRepository;
+	
+	@Override
+	public PedidoModel register(PedidoRecordDTO pedidoDTO) {
+		
+	}
+
+	@Override
+	public List<PedidoModel> findAll() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<PedidoModel> findPedidoByCpf(String cpf) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public PedidoModel update(Integer id, PedidoRecordDTO pedidoDTO) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String delete(Integer id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

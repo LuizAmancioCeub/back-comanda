@@ -1,0 +1,5 @@
+package com.comandadigital.services;
+
+public interface MesaService {
+
+}

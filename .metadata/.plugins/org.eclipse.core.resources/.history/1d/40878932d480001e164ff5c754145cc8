@@ -1,0 +1,67 @@
+package com.comandadigital.services;
+
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.comandadigital.dtos.ComandaRecordDTO;
+import com.comandadigital.models.CategoriaModel;
+import com.comandadigital.models.ComandaModel;
+import com.comandadigital.models.ItemModel;
+import com.comandadigital.models.StatusModel;
+import com.comandadigital.repositories.ComandaRepository;
+import com.comandadigital.repositories.StatusRepository;
+
+@Service
+public class ComandaServiceImplements implements ComandaService {
+	@Autowired
+	ComandaRepository comandaRepository;
+	@Autowired
+	StatusRepository statusRepository;
+	
+	@Override
+	public List<ItemModel> findItemByCategoria(CategoriaModel categoria) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Optional<ComandaModel> findById(Integer id) {
+		// TODO Auto-generated method stub
+		return Optional.empty();
+	}
+
+	@Override
+	public List<ComandaModel> findAll() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	@Override
+	public ComandaModel register(ComandaRecordDTO comandaDTO) {
+		var comandaModel = new ComandaModel();
+		BeanUtils.copyProperties(comandaDTO, comandaModel);
+		
+		// consultando o status inicial do item
+		StatusModel defaultStatus = statusRepository.findById(6).orElseThrow(() -> new RuntimeException("Status não encontrado"));
+		comandaModel.setStatus(defaultStatus);
+		
+		return this.comandaRepository.save(comandaModel);
+	}
+
+	@Override
+	public ComandaModel update(Integer id, ComandaRecordDTO comandaDTO) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String delete(Integer id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

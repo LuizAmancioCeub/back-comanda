@@ -1,0 +1,63 @@
+package com.comandadigital.services;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.web.bind.annotation.RequestBody;
+
+import com.comandadigital.dtos.ClienteLoginDTO;
+import com.comandadigital.dtos.CozinhaLoginDTO;
+import com.comandadigital.dtos.LoginDTO;
+import com.comandadigital.infra.security.TokenService;
+import com.comandadigital.models.ClienteModel;
+import com.comandadigital.repositories.ClienteRepository;
+import com.comandadigital.repositories.CozinhaRepository;
+import com.comandadigital.repositories.MesaRepository;
+import com.comandadigital.repositories.PerfilRepository;
+import com.comandadigital.repositories.StatusRepository;
+
+import jakarta.validation.Valid;
+
+public class LoginService {
+	@Autowired
+	private AuthenticationManager authManager;
+	@Autowired
+	private ClienteRepository clienteRepository;
+	@Autowired
+	private CozinhaRepository cozinhaRepository;
+	@Autowired
+	TokenService tokenService;
+	@Autowired
+	private PerfilRepository perfilRepository;
+	@Autowired
+	private MesaRepository mesaRepository;
+	@Autowired
+	private MesaServiceImplements mesaService;
+	@Autowired
+	private CozinhaServiceImplements cozinhaService;
+	@Autowired
+	private ClienteServiceImplements clienteService;
+	@Autowired
+	private ComandaServiceImplements comandaService;
+	@Autowired
+	private StatusRepository statusRepository;
+	
+	public String login(@RequestBody @Valid LoginDTO dto) {
+		
+		if(clienteRepository.findByLogin(dto.login()) != null) {
+			ClienteLoginDTO clienteDTO = new ClienteLoginDTO(dto.login(), dto.senha(), dto.mesa());
+			var cliente = clienteService.login(clienteDTO);
+			return cliente;
+		}
+		
+		if(cozinhaRepository.findByLogin(dto.login()) != null) {
+			CozinhaLoginDTO cozinhaDTO = new CozinhaLoginDTO(dto.login(), dto.senha());
+			var cozinha = cozinhaService.login(cozinhaDTO);
+			return cozinha;
+		}
+		
+		// Validar se existe login
+			return "LoginNotFound";	
+		 
+	}
+}

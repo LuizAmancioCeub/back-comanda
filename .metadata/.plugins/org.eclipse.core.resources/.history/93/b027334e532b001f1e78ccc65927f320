@@ -1,0 +1,4 @@
+Insert into tb01_perfil(tb01_perfil.NU_PERFIL,tb01_perfil.PERFIL) values (1, "Cliente"),(2,"Visitante"),(3,"Gerente"),(4,"Garçom"),(5,"Cozinha"),(6,"Caixa");
+Insert into tb13_status (tb13_status.STATUS) values ("Ativo"),("Inativo"),("Em Preparação"),("Pronto para Entrega"),("Entregue"),("Cancelado"),("Em Processamento"),("Aberta"),("Aguardando Pagamento"),("Paga"),("Livre"),("Ocupada"),("Reservado"),("Indisponível");
+Insert into tb02_gerente (NU_GERENTE, MATRICULA, NOME, CPF,SENHA,TELEFONE,EMAIL,NU_PERFIL) values
+						 (1,"GE1001", "Gerente Inicial","00000000000","Comanda2024@","61999999999","gerenteinicial@tst.com",3);
