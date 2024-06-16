@@ -10,7 +10,7 @@ FROM openjdk:17-slim
 
 EXPOSE 8080
 
-COPY --from=build /target/comanda-digital-deploy.jar app.jar
+COPY --from=build comanda-digital-deploy.jar app.jar
 
 ENTRYPOINT [ "java", "-jar", "app.jar" ]
 
